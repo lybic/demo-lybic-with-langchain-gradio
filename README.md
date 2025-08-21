@@ -1,5 +1,13 @@
 # Build a GUI Agent with LangChain, Gradio, and Gemini
 
+This is a single-model branch repository (one model is responsible for both planner and groudning). 
+If you are looking for a dual-model branch repository (two different models, one dedicated to planner
+and the other to groudning), please click [here](https://github.com/lybic/demo-lybic-with-langchain-gradio/tree/gemini_planner_uitars_grounding).
+
+Using two models will achieve better results than using a single model.
+
+---
+
 This repository provides a step-by-step tutorial for building a GUI Agent that can understand and execute complex tasks 
 on a computer.
 
