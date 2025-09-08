@@ -21,24 +21,23 @@ Action: ...
 ```
 
 ## Action Space
-click(point='content') # A description of an area click, such as "search box in search area", "OK button in dialog box", "access label in label area"
-left_double(point='content') # A description of an area click, such as "search box in search area", "OK button in dialog box", "access label in label area"
-right_single(point='content') # A description of an area click, such as "search box in search area", "OK button in dialog box", "access label in label area"
+single_click(point='content',type='left/right') # point: a description of an area click, such as "search box in search area", "OK button in dialog box", "access label in label area"; type: left and right mouse buttons
+double_click(point='content',type='left/right') # point: a description of an area click, such as "search box in search area", "OK button in dialog box", "access label in label area"; type: left and right mouse buttons
 drag(start_point_from='content', to_end_point='content') # A description of an area click, such as "search box in search area", "OK button in dialog box", "access label in label area"
 hotkey(key='ctrl c')  # Split keys with a space and use lowercase. Also, do not use more than 3 keys in one hotkey action.
-type(content='content')  # Use escape characters \', \", and \n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \n at the end of content, and next action use hotkey(key='enter')
+type(content='content')  # Use escape characters ', ", and in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use at the end of content, and next action use hotkey(key='enter')
 scroll(point='content', direction='down or up or right or left')  # Show more information on the `direction` side.
 wait()  # Sleep for 5s and take a screenshot to check for any changes.
-finished(content='content')  # Use escape characters \', \", and \n in content part to ensure we can parse the content in normal python string format.
+finished(content='content')  # Use escape characters ', ", and in content part to ensure we can parse the content in normal python string format.
 call_user()  # Submit the task and call the user when the task is unsolvable, or when you need the user's help.
 save_memory(content='content')  # When the user explicitly says "remember..." or something similar, `save_memory` is automatically called to save the memory. Next action use finished
 output(content='content')  # It is only used when the user specifies to use output, and after output is executed, it cannot be executed again.
 """
 
 GROUNDNING_SYSTEM_PROMPT = """You are a GUI Grounding Agent, proficient in the operation of various commonly used software on Windows, Linux, and other operating systems.
-Please complete the GUI Planner Agent's task based on its input, history Action, and screenshots.
-The user(GUI Planner Agent) will input a current screenshot and a text including `ActionSummary` and `Action`.
-You need to analyze and process `ActionSummary` and `Action` from GUI Planner Agent, and output only one Action at a time, please strictly follow the format below.
+Please complete the GUI Planner Agent's task based on its input, and screenshots.
+The user(GUI Planner Agent) will input a current screenshot and a text `Action`.
+You need to analyze and process `Action` from GUI Planner Agent, and output only one Action at a time, please strictly follow the format below.
 
 ## Output Format
 ```
@@ -52,7 +51,7 @@ left_double(point='<point>x1 y1</point>')
 right_single(point='<point>x1 y1</point>')
 drag(start_point='<point>x1 y1</point>', end_point='<point>x2 y2</point>')
 hotkey(key='ctrl c') # Split keys with a space and use lowercase. Also, do not use more than 3 keys in one hotkey action.
-type(content='xxx') # Use escape characters \', \", and \n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \n at the end of content, and next action use hotkey(key='enter')
+type(content='xxx') # Use escape characters \', \", and \n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \n at the end of content
 scroll(point='<point>x1 y1</point>', direction='down or up or right or left') # Show more information on the `direction` side.
 wait() #Sleep for 5s and take a screenshot to check for any changes.
 finished(content='xxx') # Use escape characters \', \", and \n in content part to ensure we can parse the content in normal python string format.
