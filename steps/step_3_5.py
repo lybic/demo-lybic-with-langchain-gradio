@@ -27,10 +27,10 @@ left_double(point='<point>x1 y1</point>')
 right_single(point='<point>x1 y1</point>')
 drag(start_point='<point>x1 y1</point>', end_point='<point>x2 y2</point>')
 hotkey(key='ctrl c')  # Split keys with a space and use lowercase. Also, do not use more than 3 keys in one hotkey action.
-type(content='xxx')  # Use escape characters \', \", and \n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \n at the end of content, and next action use hotkey(key='enter')
+type(content='xxx')  # Use escape characters \', \", and \\n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \\n at the end of content, and next action use hotkey(key='enter')
 scroll(point='<point>x1 y1</point>', direction='down or up or right or left')  # Show more information on the `direction` side.
 wait()  # Sleep for 5s and take a screenshot to check for any changes.
-finished(content='xxx')  # Use escape characters \', \", and \n in content part to ensure we can parse the content in normal python string format.
+finished(content='xxx')  # Use escape characters \', \", and \\n in content part to ensure we can parse the content in normal python string format.
 call_user()  # Submit the task and call the user when the task is unsolvable, or when you need the user's help.
 save_memory(content='content')  # When the user explicitly says "remember..." or something similar, `save_memory` is automatically called to save the memory. Next action use finished
 output(content='content')  # It is only used when the user specifies to use output, and after output is executed, it cannot be executed again.
@@ -40,6 +40,7 @@ output(content='content')  # It is only used when the user specifies to use outp
 - The x1,x2 and y1,y2 are the coordinates of the element.
 - The resolution of the screenshot is 1280*720.
 - Write a small plan and finally summarize your next action (with its target element) in one sentence in `Thought` part.
+- You MUST ensure that the `Thought` and `Action` you output are on separate lines, rather than using `\\n` to combine the two lines into one.
 """
 
 sandbox_id = os.getenv("SANDBOX")
@@ -101,10 +102,9 @@ async def playground(user_input, history=None):
                 yield "", history
 
                 # 3. Act: Parse and execute the action
-                action_dto = await computer_use.parse_model_output(
-                    dto.ComputerUseParseRequestDto(model="seed",
-                                                   textContent=str(response),
-                                                   ))
+                action_dto = await computer_use.parse_llm_output(
+                    model_type="seed",llm_output=str(response))
+                print("debug:parse the model output: ", action_dto)
 
                 action = action_dto.actions[0]
                 await computer_use.execute_computer_use_action(sandbox_id, dto.ComputerUseActionDto(action=action))

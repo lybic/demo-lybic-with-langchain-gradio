@@ -41,6 +41,7 @@ output(content='content') # It is only used when the user specifies to use outpu
 - The x1,x2 and y1,y2 are the coordinates of the element.
 - The resolution of the screenshot is 1280*720.
 - Write a small plan and finally summarize your next action (with its target element) in one sentence in `Thought` part.
+- You MUST ensure that the `Thought` and `Action` you output are on separate lines, rather than using `\\n` to combine the two lines into one.
 """
 
 sandbox_id = os.getenv("SANDBOX")
