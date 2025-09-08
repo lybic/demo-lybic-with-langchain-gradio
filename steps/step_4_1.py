@@ -76,7 +76,7 @@ memory = ConversationBufferMemory(memory_key="history")
 
 from langchain_openai import ChatOpenAI
 llm_uitars = ChatOpenAI(
-    base_url=os.getenv("AEK_MODEL_ENDPOINT"),
+    base_url=os.getenv("ARK_MODEL_ENDPOINT"),
     api_key=os.getenv("ARK_API_KEY"),
     model=os.getenv("ARK_MODEL_NAME"),
 )
