@@ -1,3 +1,4 @@
+import asyncio
 import os
 import dotenv
 
@@ -168,7 +169,7 @@ async def playground(user_input, history=None):
                     history.append([None, f"Task finished. Final state:\n\n![screenshot]({final_screenshot_url})"])
                     yield "", history
                     break
-
+                await asyncio.sleep(2)
                 # Prepare for the next loop iteration
                 history.append([f"Action executed: `{ action.model_dump_json() }`\n\nTaking new screenshot...", "Thinking..."])
                 yield "", history
