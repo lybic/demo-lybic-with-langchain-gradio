@@ -5,5 +5,5 @@ langchain-openai==0.2.14
 dotenv==0.9.9
 langchain==0.3.27
 gradio==5.40.0
-lybic>=0.5.3
+lybic==0.7.2
 mcp>=1.12.0
