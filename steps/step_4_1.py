@@ -17,13 +17,8 @@ You need to complete the entire task step by step, and output only one Action at
 
 ## Output Format
 ```
-ActionSummary: ...
 Action: ...
 ```
-
-## Action Summary
-- Use English in `ActionSummary` part.
-- Write a small plan and finally summarize your next action (with its target element) in one sentence in `ActionSummary` part.
 
 ## Action Space
 click(point='content') # A description of an area click, such as "search box in search area", "OK button in dialog box", "access label in label area"
@@ -126,7 +121,7 @@ async def playground(user_input, history=None):
 
                 # Get LLM response
                 response_message = await llm.ainvoke(full_message_list)
-                response = response_message.content
+                response = response_message.text()
                 print("Planner output:", response)
                 print("---------")
 
@@ -152,13 +147,13 @@ async def playground(user_input, history=None):
                 system_message = SystemMessage(content=GROUNDNING_SYSTEM_PROMPT)
                 full_message_list = [system_message] + grounding_message
                 response_message = await llm_uitars.ainvoke(full_message_list)
-                response = response_message.content
+                response = response_message.text()
                 print("Grounding output:", response)
 
                 # 4. Act: Parse and execute the action
                 action_dto = await computer_use.parse_model_output(
                     dto.ComputerUseParseRequestDto(model="ui-tars",
-                                                   textContent=str(response),
+                                                   textContent=response,
                                                    ))
 
                 action = action_dto.actions[0]
